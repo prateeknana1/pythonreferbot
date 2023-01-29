@@ -5,14 +5,14 @@ import telebot
 ##TOKEN DETAILS
 TOKEN = "TRON"
 
-BOT_TOKEN = "6050359453:AAGWCFJUQV1ObnjVemNVUKA0usvYezpN5gg"
-PAYMENT_CHANNEL = "@BTBCPAY" #add payment channel here including the '@' sign
-OWNER_ID = 5508372905 #write owner's user id here.. get it from @MissRose_Bot by /id
-CHANNELS = ["@BTBCOFFICIALANNOUNCEMENT"] #add channels to be checked here in the format - ["Channel 1", "Channel 2"] 
+BOT_TOKEN = "YOUR BOT TOKEN"
+PAYMENT_CHANNEL = "@PAYMENTCHANNELUSERNAME" #add payment channel here including the '@' sign
+OWNER_ID = 1194007250 #write owner's user id here.. get it from @MissRose_Bot by /id
+CHANNELS = ["@CHECKCHANNEL"] #add channels to be checked here in the format - ["Channel 1", "Channel 2"] 
               #you can add as many channels here and also add the '@' sign before channel username
-Daily_bonus = 5 #Put daily bonus amount here!
-Mini_Withdraw = 100  #remove 0 and add the minimum withdraw u want to set
-Per_Refer = 20 #add per refer bonus here
+Daily_bonus = 0.001 #Put daily bonus amount here!
+Mini_Withdraw = 0.5  #remove 0 and add the minimum withdraw u want to set
+Per_Refer = 0.0001 #add per refer bonus here
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -98,7 +98,7 @@ def start(message):
         markups = telebot.types.InlineKeyboardMarkup()
         markups.add(telebot.types.InlineKeyboardButton(
             text='🤼‍♂️ Joined', callback_data='check'))
-        msg_start = "*🍔 To Use This Bot You Need To Join This Channel - @BTBCOFFICIALANNOUNCEMENT\n➡️ @ Fill your channels at line: 101 and 157*"
+        msg_start = "*🍔 To Use This Bot You Need To Join This Channel - \n➡️ @ Fill your channels at line: 101 and 157*"
         bot.send_message(user, msg_start,
                          parse_mode="Markdown", reply_markup=markups)
    except:
@@ -154,7 +154,7 @@ def query_handler(call):
             markup = telebot.types.InlineKeyboardMarkup()
             markup.add(telebot.types.InlineKeyboardButton(
                 text='🤼‍♂️ Joined', callback_data='check'))
-            msg_start = "*🍔 To Use This Bot You Need To Join This Channel - @BTBCOFFICIALANNOUNCEMENT\n➡️ @ Fill your channels at line: 101 and 157*"
+            msg_start = "*🍔 To Use This Bot You Need To Join This Channel - \n➡️ @ Fill your channels at line: 101 and 157*"
             bot.send_message(call.message.chat.id, msg_start,
                              parse_mode="Markdown", reply_markup=markup)
    except:
@@ -206,7 +206,7 @@ def send_text(message):
 
         keyboard = telebot.types.ReplyKeyboardMarkup(True)
         keyboard.row('🚫 Cancel')
-        send = bot.send_message(message.chat.id, "_⚠️Send your Polygon Matic Address._",
+        send = bot.send_message(message.chat.id, "_⚠️Send your TRX Wallet Address._",
                                 parse_mode="Markdown", reply_markup=keyboard)
         # Next message will call the name_handler function
         bot.register_next_step_handler(message, trx_address)
@@ -270,19 +270,19 @@ def trx_address(message):
    try:
     if message.text == "🚫 Cancel":
         return menu(message.chat.id)
-    if len(message.text) == 42:
+    if len(message.text) == 34:
         user_id = message.chat.id
         user = str(user_id)
         data = json.load(open('users.json', 'r'))
         data['wallet'][user] = message.text
 
-        bot.send_message(message.chat.id, "*💹Your Matic wallet set to " +
+        bot.send_message(message.chat.id, "*💹Your Trx wallet set to " +
                          data['wallet'][user]+"*", parse_mode="Markdown")
         json.dump(data, open('users.json', 'w'))
         return menu(message.chat.id)
     else:
         bot.send_message(
-            message.chat.id, "*⚠️ It's Not a Valid Matic Address!*", parse_mode="Markdown")
+            message.chat.id, "*⚠️ It's Not a Valid Trx Address!*", parse_mode="Markdown")
         return menu(message.chat.id)
    except:
         bot.send_message(message.chat.id, "This command having error pls wait for ficing the glitch by admin")
